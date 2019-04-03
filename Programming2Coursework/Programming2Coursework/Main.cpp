@@ -115,9 +115,6 @@ int main(int argc, char** argv) {
 	//c.displayAlbums();
 	//std::cout << c << std::endl << "################" << std::endl;
 	//std::cout << c.getTotalArtistPlayTime("Pink Floyd") << std::endl;
-	c.sortAlbums(Album::descending);
-	std::cout << c << std::endl << "################" << std::endl;
-	c.sortAlbums(Album::ascending);
-	std::cout << c << std::endl << "################" << std::endl;
+	c.displayAlbums(Album::ascending);
 	return EXIT_SUCCESS;
 }

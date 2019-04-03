@@ -64,9 +64,9 @@ void Collection::sortAlbums(bool (*f)(const Album& a1, const Album& a2))//F comp
 }
 
 
-void Collection::displayAlbums()
+void Collection::displayAlbums(bool(*f)(const Album& a1, const Album& a2))
 {
-	sortAlbums(Album::ascending);
+	sortAlbums(f);
 	std::cout << *this;
 }
 

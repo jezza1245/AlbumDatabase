@@ -15,8 +15,8 @@ public:
 	std::vector<Album> getAlbums() const;
 	void addAlbum(Album a);
 
-	void sortAlbums(bool(*f)(const Album& a1, const Album& a2));//F compare
-	void displayAlbums();
+	void sortAlbums(bool(*f)(const Album& a1, const Album& a2)); //F compare
+	void displayAlbums(bool(*f)(const Album& a1, const Album& a2));
 	Duration getTotalArtistPlayTime(std::string artist);
 	Album getAlbumWithMostTracks();
 
