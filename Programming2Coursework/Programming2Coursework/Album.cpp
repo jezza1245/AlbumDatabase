@@ -84,13 +84,9 @@ bool Album::ascending(const Album& a1, const Album& a2)
 
 bool Album::descending(const Album& a1, const Album& a2)
 {
-	if (a1.getArtist() != a2.getArtist())
+	if (a1.getArtist() == a2.getArtist())
 	{
-		if (a1.getArtist() > a2.getArtist())
-		{
-			return true;
-		}
-		return false;
+		return (a1.getTitle() > a2.getTitle());
 	}
-	return false;
+	return (a1.getArtist() > a2.getArtist());
 }

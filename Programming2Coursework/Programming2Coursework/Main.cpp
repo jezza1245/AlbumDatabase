@@ -4,7 +4,6 @@
 #include "Track.h"
 #include "Album.h"
 #include "Collection.h"
-#include "StringTrimmer.h"
 
 int main(int argc, char** argv) {
 
@@ -96,7 +95,6 @@ int main(int argc, char** argv) {
 	Collection c;
 	*/
 	Collection c;
-	Album a;
 	std::ifstream infile;
 	std::string line;
 	infile.open("albums.txt");
@@ -113,12 +111,13 @@ int main(int argc, char** argv) {
 
 	//Album::descending(c.getAlbums().at(0), c.getAlbums().at(1));
 
-	//std::cout << c;
-	c.displayAlbums();
-
-	//std::cout << c.totalArtistPlayTime("Pink Floyd");
-
-
-
+	//std::cout << c << std::endl << "################" <<std::endl;
+	//c.displayAlbums();
+	//std::cout << c << std::endl << "################" << std::endl;
+	//std::cout << c.getTotalArtistPlayTime("Pink Floyd") << std::endl;
+	c.sortAlbums(Album::descending);
+	std::cout << c << std::endl << "################" << std::endl;
+	c.sortAlbums(Album::ascending);
+	std::cout << c << std::endl << "################" << std::endl;
 	return EXIT_SUCCESS;
 }

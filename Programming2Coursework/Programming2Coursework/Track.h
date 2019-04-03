@@ -16,9 +16,6 @@ public:
 	std::string getTitle() const;
 	Duration getDuration() const;
 
-	void setTitle(std::string p_new_title);
-	void setDuration(Duration p_new_duration);
-
 };
 
 //---------------- Constructors ---------------------------

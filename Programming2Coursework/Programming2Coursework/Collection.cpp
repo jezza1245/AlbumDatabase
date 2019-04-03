@@ -30,31 +30,43 @@ std::istream& operator>>(std::istream& in, Collection &c)
 	return in;
 }
 
-Duration Collection::totalArtistPlayTime(std::string artist)
+Duration Collection::getTotalArtistPlayTime(std::string artist)
 {
 	Duration totalDuration;
 	for (Album a : albums)
 	{
-		std::cout << a.getArtist() << a.getArtist().length() << " : " << artist << std::endl;
+		//std::cout << a.getArtist() << a.getArtist().length() << " : " << artist << std::endl;
 		if (a.getArtist() == artist)
 		{
-			std::cout << "MATCH!" << std::endl;
+			//std::cout << "MATCH!" << std::endl;
 			totalDuration += a.getTotalLength();
 		}
 	}
 	return totalDuration;
 }
 
+Album Collection::getAlbumWithMostTracks() {
+	Album largestAlbum = albums.at(0);
+	for (Album album : albums) {
+		//std::cout << album << std::endl;
+		if (album > largestAlbum) {
+			largestAlbum = album;
+		}
+	}
 
-void Collection::sortAlbums()//F compare
+	return largestAlbum;
+}
+
+
+void Collection::sortAlbums(bool (*f)(const Album& a1, const Album& a2))//F compare
 {
-	std::sort(albums.begin(), albums.end(), Album::ascending);
+	std::sort(albums.begin(), albums.end(), f);
 }
 
 
 void Collection::displayAlbums()
 {
-	sortAlbums();
+	sortAlbums(Album::ascending);
 	std::cout << *this;
 }
 

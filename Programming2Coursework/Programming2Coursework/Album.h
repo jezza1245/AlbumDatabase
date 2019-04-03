@@ -61,7 +61,7 @@ inline std::vector<Track> Album::getTracks() const {
 	return tracks;
 }
 inline int Album::getNumSongs() const {
-	return tracks.size();
+	return (int)tracks.size();
 }
 
 //-------------------- General Methods ------------------------------
