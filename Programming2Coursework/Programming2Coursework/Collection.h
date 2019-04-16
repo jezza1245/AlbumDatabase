@@ -19,6 +19,7 @@ public:
 	void displayAlbums(bool(*f)(const Album& a1, const Album& a2));
 	Duration getTotalArtistPlayTime(std::string artist);
 	Album getAlbumWithMostTracks();
+	Track getLongestTrack();
 
 };
 

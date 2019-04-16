@@ -6,7 +6,7 @@ Duration::operator int() const {
 	return (hours * 3600 + minutes * 60 + seconds);
 }
 
-//Output Stream operator
+//Input Stream operator
 std::istream& operator>>(std::istream& in, Duration& d)
 {
 	char delimiter; //Expected delimiter

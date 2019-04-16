@@ -23,7 +23,7 @@ public:
 
 	void addTrack(Track& t);
 	int getNumSongs() const;
-	Track *getLongestTrack() const;
+	Track getLongestTrack() const;
 	Duration getTotalLength() const;
 
 	static bool ascending(const Album& a1, const Album& a2);
@@ -84,7 +84,7 @@ inline int operator<=(const Album& a1, const Album& a2) { // <=
 	return !(a1 > a2);
 }
 inline bool operator==(const Album& a1, const Album& a2) { // <=
-	return a1.getNumSongs() == a2.getNumSongs();
+	return (a1.getArtist() == a2.getArtist() && a1.getTitle() == a2.getTitle());
 }
 inline bool operator!=(const Album& a1, const Album& a2) { // <=
 	return !(a1 == a2);

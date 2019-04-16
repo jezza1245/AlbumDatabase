@@ -4,6 +4,9 @@
 #include <exception>
 #include <iomanip>
 
+/*
+	Duration of any Track or Album as hours, minutes and seconds
+*/
 class Duration {
 
 	int hours, minutes, seconds;
@@ -19,8 +22,6 @@ public:
 
 	operator int() const;
 
-	void print();
-
 	struct DurationConstructorException;
 };
 
@@ -34,7 +35,6 @@ struct Duration::DurationConstructorException : public std::exception {
 };
 
 //---------------- Constructors ---------------------------
-
 inline Duration::Duration(int p_hours, int p_minutes, int p_seconds) {
 	if (p_hours < 0 || p_minutes < 0 || p_seconds < 0) { //If negative duration field, throw exception
 		throw DurationConstructorException();
@@ -53,7 +53,7 @@ inline Duration::Duration(int totalSeconds) {
 	if (totalSeconds < 0) { //If negative duration field, throw exception
 		throw DurationConstructorException();
 	}
-	if (totalSeconds == 0)
+	if (totalSeconds == 0) //If 00:00:00, call default constructor
 	{
 		Duration();
 	}
@@ -67,7 +67,7 @@ inline Duration::Duration(int totalSeconds) {
 	}
 }
 
-inline Duration::Duration()
+inline Duration::Duration() // Default constructor, 00:00:00
 {
 	this->hours = 0;
 	this->minutes = 0;
@@ -86,29 +86,24 @@ inline int Duration::getSeconds() const {
 	return seconds;
 }
 
-
-// -------------- Class Methods ------------------
-
-
-
 // ------------- Operator Overloading -------------
-inline bool operator==(const Duration& d1, const Duration& d2) { // ==
+inline bool operator==(const Duration& d1, const Duration& d2) { // == 
 	return static_cast<int>(d1) == static_cast<int>(d2);
 }
-inline bool operator!=(const Duration& d1, const Duration& d2) { // !=
+inline bool operator!=(const Duration& d1, const Duration& d2) { // != 
 	return !(d1 == d2);
 }
-inline int operator-(const Duration& d1, const Duration& d2) { // -
+inline int operator-(const Duration& d1, const Duration& d2) { // -		[Returns difference in seconds]
 	return static_cast<int>(d1) - static_cast<int>(d2);
 }
-inline int operator+(const Duration& d1, const Duration& d2) { // +
+inline int operator+(const Duration& d1, const Duration& d2) { // +		[Returns summation in seconds]
 	return static_cast<int>(d1) + static_cast<int>(d2);
 }
-inline void operator-=(Duration& d1, const Duration& d2) { // -=
-	d1 = Duration(static_cast<int>(d1) - static_cast<int>(d2));
+inline void operator-=(Duration& d1, const Duration& d2) { // -=		[Returns summation in seconds]
+	d1 = Duration(static_cast<int>(d1) - static_cast<int>(d2)); //Can throw DurationConstructorException if result negative
 }
-inline void operator+=(Duration& d1, const Duration& d2) { // +=
-	d1 = Duration(static_cast<int>(d1) + static_cast<int>(d2));
+inline void operator+=(Duration& d1, const Duration& d2) { // +=		[Returns summation in seconds]
+	d1 = Duration(static_cast<int>(d1) + static_cast<int>(d2)); //Can throw DurationConstructorException if result negative
 }
 inline int operator<(const Duration& d1, const Duration& d2) { // <
 	return static_cast<int>(d1) < static_cast<int>(d2);
@@ -123,7 +118,9 @@ inline int operator<=(const Duration& d1, const Duration& d2) { // <=
 	return !(d1 > d2);
 }
 
-inline std::ostream& operator<<(std::ostream& out, const Duration &d)
+
+
+inline std::ostream& operator<<(std::ostream& out, const Duration &d) // Outstrean
 {
 	// Output -> hh:mm:ss
 	return out << std::setfill('0') << std::setw(2) << d.getHours() << ":" <<

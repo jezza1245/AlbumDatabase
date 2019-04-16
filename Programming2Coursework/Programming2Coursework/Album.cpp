@@ -49,15 +49,14 @@ std::istream& operator>>(std::istream& in, Album& a)
 	return in;
 }
 
-Track *Album::getLongestTrack() const
+Track Album::getLongestTrack() const
 {
-	std::vector<Track> tracks = this->getTracks();
-	Track *longest = &tracks.at(0);
+	Track longest;
 	for (Track track : tracks)
 	{
-		if (track.getDuration() > longest->getDuration())
+		if (track > longest)
 		{
-			longest = &track;
+			longest = track;
 		}
 	}
 	return longest;

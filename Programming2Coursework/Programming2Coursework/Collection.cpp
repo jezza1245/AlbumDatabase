@@ -57,6 +57,17 @@ Album Collection::getAlbumWithMostTracks() {
 	return largestAlbum;
 }
 
+Track Collection::getLongestTrack() {
+	Track longestTrack;
+	for (Album album : albums) {
+		Track t;
+		if ((t = album.getLongestTrack()) > longestTrack) {
+			longestTrack = t;
+		}
+	}
+	return longestTrack;
+}
+
 
 void Collection::sortAlbums(bool (*f)(const Album& a1, const Album& a2))//F compare
 {
