@@ -1,81 +1,93 @@
 #include "collection.h"
 #include <algorithm>
 
-std::ostream& operator<<(std::ostream& out, const Collection &c)
+std::ostream& operator<<(std::ostream& out, const Collection &c) //Output
 {
-	std::vector<Album> albs = c.getAlbums();
-	for (Album album : albs)
+	std::vector<Album*> albs = c.getAlbums();
+	for (Album *album : albs)
 	{
-		out << album;
+		out << *album;
 	}
 	return out;
 }
-std::istream& operator>>(std::istream& in, Collection &c)
+std::istream& operator>>(std::istream& in, Collection &c) //Input
 {
 	char line[256];
 
-	Album a;
 	while (!in.eof())
 	{
-		if (in >> a)
+		Album *a = new Album();
+		if (in >> *a)
 		{
 			c.addAlbum(a);
 		}
 		else
 		{
 			in.clear();
+			delete a;
 			return in;
 		}
 	}
 	return in;
 }
 
+/*
+	Get total duration of all tracks of a given artist, in this collection
+*/
 Duration Collection::getTotalArtistPlayTime(std::string artist)
 {
 	Duration totalDuration;
-	for (Album a : albums)
+	for (Album *a : albums) //For all albums
 	{
-		//std::cout << a.getArtist() << a.getArtist().length() << " : " << artist << std::endl;
-		if (a.getArtist() == artist)
+		if (a->getArtist() == artist) //If artist is parameter add album length
 		{
-			//std::cout << "MATCH!" << std::endl;
-			totalDuration += a.getTotalLength();
+			totalDuration += a->getTotalLength();
 		}
 	}
 	return totalDuration;
 }
 
+/*
+	Returns a copy of the album with the most tracks
+*/
 Album Collection::getAlbumWithMostTracks() {
-	Album largestAlbum = albums.at(0);
-	for (Album album : albums) {
-		//std::cout << album << std::endl;
-		if (album > largestAlbum) {
+	Album *largestAlbum = albums.at(0);
+	for (Album *album : albums){ 
+		if (*album > *largestAlbum) {
 			largestAlbum = album;
 		}
 	}
-
-	return largestAlbum;
+	return Album(*largestAlbum); //Create and Return copy of largest album
 }
 
+/*
+	Return copy of the longest track in the collection
+*/
 Track Collection::getLongestTrack() {
-	Track longestTrack;
-	for (Album album : albums) {
-		Track t;
-		if ((t = album.getLongestTrack()) > longestTrack) {
+	Track* longestTrack = albums.at(0)->getLongestTrack();
+	for (Album *album : albums) {
+		Track* t;
+		if (*(t = album->getLongestTrack()) > *longestTrack) {
 			longestTrack = t;
 		}
 	}
-	return longestTrack;
+	return Track(*longestTrack);
 }
 
-
-void Collection::sortAlbums(bool (*f)(const Album& a1, const Album& a2))//F compare
+/*
+	Calls stl sort function for vector with function f
+	f -> bool function that compares two albums
+*/
+void Collection::sortAlbums(bool (*f)(const Album* a1, const Album* a2))
 {
 	std::sort(albums.begin(), albums.end(), f);
 }
 
-
-void Collection::displayAlbums(bool(*f)(const Album& a1, const Album& a2))
+/*
+	Calls collection sort method, passing on f, which denotes how to sort,
+	therefore how to display (order)
+*/
+void Collection::displayAlbums(bool(*f)(const Album* a1, const Album* a2))
 {
 	sortAlbums(f);
 	std::cout << *this;

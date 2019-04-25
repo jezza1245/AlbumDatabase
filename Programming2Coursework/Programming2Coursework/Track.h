@@ -3,6 +3,7 @@
 
 #include <string>
 #include "Duration.h"
+#include "StringTrimmer.h"
 /*
 	Stores title and duration 
 */
@@ -13,6 +14,7 @@ class Track
 
 public:
 	Track(std::string p_title, Duration p_duration);
+	Track(const Track& t); //Copy Constructor
 	Track();
 
 	std::string getTitle() const;
@@ -20,36 +22,47 @@ public:
 	void setTitle(std::string newTitle);
 	void setDuration(Duration newDuration);
 
+	Track& operator=(const Track &t) { //Copy assignment operator
+		if (this != &t) {
+			title = t.title;
+			duration = t.duration;
+		}
+		return *this;
+	} 
+
 };
 
 //---------------- Constructors ---------------------------
 inline Track::Track(std::string p_title, Duration p_duration)
 {
-	this->title = p_title;
-	this->duration = p_duration;
+	title = p_title;
+	TrimSides(title); //Removes any un-necessary whitespace from either side of string
+	duration = p_duration;
+}
+inline Track::Track(const Track & t) //Copy Constructor
+{
+	title = t.title;
+	duration = t.duration;
 }
 inline Track::Track() //Default Constructor
 {
-	this->title = "N/A";
-	this->duration = Duration();
+	title = "N/A";
+	duration = Duration();
 }
 
 //------------ Getters and Setters ----------------
 inline std::string Track::getTitle() const {
-	return this->title;
+	return title;
 }
 inline Duration Track::getDuration() const {
-	return this->duration;
+	return duration;
 }
 inline void Track::setTitle(std::string newTitle) {
-	this->title = newTitle;
+	title = newTitle;
 }
 inline void Track::setDuration(Duration newDuration){
-	this->duration = newDuration;
+	duration = newDuration;
 }
-
-// -------------- Class Methods ------------------
-
 
 // ------------- Operator Overloading -------------
 inline int operator<(const Track& t1, const Track& t2) { // <
@@ -64,15 +77,16 @@ inline int operator>=(const Track& t1, const Track& t2) { // >=
 inline int operator<=(const Track& t1, const Track& t2) { // <=
 	return !(t1 > t2);
 }
-inline bool operator==(const Track& t1, const Track& t2) { // <=
+inline bool operator==(const Track& t1, const Track& t2) { // ==
 	return (t1.getTitle() == t2.getTitle() && t1.getDuration() == t2.getDuration());
 }
-inline bool operator!=(const Track& t1, const Track& t2) { // <=
+inline bool operator!=(const Track& t1, const Track& t2) { // !=
 	return !(t1 == t2);
 }
-inline std::ostream& operator<<(std::ostream& out, const Track& t)
+inline std::ostream& operator<<(std::ostream& out, const Track& t) // Output
 {
-	return out << t.getTitle() << "[" << t.getDuration() << "]";
+	// -> hh:mm:ss - theTitle
+	return out << t.getDuration() << " - " << t.getTitle();
 }
 
 std::istream& operator>>(std::istream& in, Track& t);

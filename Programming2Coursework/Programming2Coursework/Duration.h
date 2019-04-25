@@ -53,25 +53,27 @@ inline Duration::Duration(int totalSeconds) {
 	if (totalSeconds < 0) { //If negative duration field, throw exception
 		throw DurationConstructorException();
 	}
-	if (totalSeconds == 0) //If 00:00:00, call default constructor
+	if (totalSeconds == 0) //If 00:00:00
 	{
-		Duration();
+		hours = 0;
+		minutes = 0;
+		seconds = 0;
 	}
 	else
 	{
-		this->hours = totalSeconds / 3600; // Set hours
+		hours = totalSeconds / 3600; // Set hours
 		int remainder = totalSeconds % 3600; // Keep track of seconds not accounted for
-		this->minutes = remainder / 60; // Set minutes
+		minutes = remainder / 60; // Set minutes
 		remainder = remainder % 60; // Update remainder
-		this->seconds = remainder; // Set seconds
+		seconds = remainder; // Set seconds
 	}
 }
 
 inline Duration::Duration() // Default constructor, 00:00:00
 {
-	this->hours = 0;
-	this->minutes = 0;
-	this->seconds = 0;
+	hours = 0;
+	minutes = 0;
+	seconds = 0;
 }
 
 //------------ Getters and Setters ----------------
@@ -118,11 +120,9 @@ inline int operator<=(const Duration& d1, const Duration& d2) { // <=
 	return !(d1 > d2);
 }
 
-
-
 inline std::ostream& operator<<(std::ostream& out, const Duration &d) // Outstrean
 {
-	// Output -> hh:mm:ss
+	// -> hh:mm:ss
 	return out << std::setfill('0') << std::setw(2) << d.getHours() << ":" <<
 		std::setfill('0') << std::setw(2) << d.getMinutes() << ":" <<
 		std::setfill('0') << std::setw(2) << d.getSeconds();

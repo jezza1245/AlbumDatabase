@@ -6,11 +6,12 @@ Duration::operator int() const {
 	return (hours * 3600 + minutes * 60 + seconds);
 }
 
-//Input Stream operator
-std::istream& operator>>(std::istream& in, Duration& d)
+std::istream& operator>>(std::istream& in, Duration& d)//Input
 {
 	char delimiter; //Expected delimiter
 	int hours, minutes, seconds; //Duration Fields
+
+	// -> hours:minutes:seconds eg. 00:12:42
 
 	//Read from inputstream to fields
 	if (in >> hours >> delimiter >> minutes >> delimiter >> seconds)

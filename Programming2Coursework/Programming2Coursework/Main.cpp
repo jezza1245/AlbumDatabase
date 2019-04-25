@@ -7,32 +7,6 @@
 
 int main(int argc, char** argv) {
 
-
-	/*
-		Testing Duration
-
-
-
-	*/
-	/*
-		Testing Track
-
-
-
-	*/
-	/*
-		Testing Album
-
-
-
-	*/
-
-
-
-
-	/*
-		Program
-	*/
 	// 1) Read in colleciton from albums.txt
 	Collection c;
 	std::ifstream infile;
@@ -42,7 +16,7 @@ int main(int argc, char** argv) {
 	// 2) Display entire album alphabetically
 	std::cout << "##########################" << std::endl << "Collection in Ascending Order..." 
 		<< std::endl << "##########################" << std::endl;
-	c.displayAlbums(Album::ascending); // <-
+	c.displayAlbums(Album::ascending); // <- (or can use Album::descending)
 	std::cout << "##########################" << std::endl << std::endl;
 	
 	// 3) Display total play time of all Pink Floyd albums in collection
@@ -62,7 +36,6 @@ int main(int argc, char** argv) {
 		<< std::endl << "##########################" << std::endl;
 	std::cout << c.getLongestTrack() << std::endl; // <-
 	std::cout << "##########################" << std::endl << std::endl;
-
 
 	return EXIT_SUCCESS;
 }
